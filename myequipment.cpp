@@ -30,11 +30,7 @@ QVector<int> costs = {1, 2, 5, 10, 10, 100, 100, 100, 100, 50, 50, 50, 50, 50};
 myEquipment::myEquipment(QWidget *parent) : QMainWindow(parent) {
     qDebug() << money;
     this->setFixedSize(1800, 1100);
-    // 设置背景色为纯白色
-    QPalette pal = palette();
-    pal.setColor(QPalette::Window, Qt::white);
-    setAutoFillBackground(true);
-    setPalette(pal);
+
     QVector<QPushButton *> recordOfButton;
     //设置基本信息
     {// 创建标题按钮

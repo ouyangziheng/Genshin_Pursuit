@@ -2,7 +2,7 @@
 
 //构造函数
 qqren::qqren(QWidget *parent) : QLabel(parent) {
-    isQQrenAlive = 1;
+    lives = 1;
     this->setFixedSize(50, 50);
 }
 
@@ -10,7 +10,10 @@ qqren::qqren(QWidget *parent) : QLabel(parent) {
 void qqren::paintEvent(QPaintEvent *) {
     QPainter painterOfCharacter(this);
     QPixmap pixOfCharacter;
-    pixOfCharacter.load(":/monster/qqren.png");
+    if (kindOfqq)
+        pixOfCharacter.load(":/monster/1.png");
+    else
+        pixOfCharacter.load(":/monster/2.png");
 
     //图片放缩
     pixOfCharacter = pixOfCharacter.scaled(50, 50, Qt::KeepAspectRatio);

@@ -1,16 +1,12 @@
 //qq人的试炼
 #include "scene01.h"
-extern int money, score, velocity;
+
+extern int money, score, velocity, atk;
 extern int livesOfLinny, maxLives;
 extern int waveOfMonster01;
 
 //构造函数
 Scene01::Scene01(QWidget *parent) : QMainWindow(parent), killNumber(0) {
-    // 设置背景色为纯白色
-    QPalette pal = palette();
-    pal.setColor(QPalette::Window, Qt::white);
-    setAutoFillBackground(true);
-    setPalette(pal);
     // 初始化界面和主角角色
     protectBirth = true;
     this->setFixedSize(1800, 1100);
@@ -57,6 +53,11 @@ void Scene01::createMoster() {
 
             // 创建 qqking 对象并设置随机位置
             qqren *smallqqren = new qqren(this);
+            int randomInt = QRandomGenerator::global()->bounded(101);
+            randomInt = randomInt % 2;
+            smallqqren->kindOfqq = randomInt;
+            if (randomInt == 0)
+                smallqqren->lives = 5 + waveOfMonster01;
             QTimer *timer_updateThePositionOfLinny = new QTimer(this);
             qqrenObjects.push_back(smallqqren);
             smallqqren->speed = 5 + waveOfMonster01;
@@ -216,7 +217,6 @@ void Scene01::checkCollision(Arrow *arr) {
     // 存储需要删除的丘丘人对象的指针
     QVector<qqren *> qqrenToDelete;
 
-    // 遍历所有丘丘人
     for (int i = 0; i < qqrenObjects.size(); i++) {
         // 获取丘丘人的边界框
         QRect qqrenRect = (qqrenObjects[i])->geometry();
@@ -224,29 +224,32 @@ void Scene01::checkCollision(Arrow *arr) {
         // 检查丘丘人和箭的边界框是否相交
         if (qqrenRect.intersects(arrowRect)) {
             // 发生碰撞，将丘丘人对象的指针添加到需要删除的容器中
-            qqrenObjects[i]->hide();
-            money++;
-            qqrenObjects[i]->setFixedSize(0, 0);
-            this->killNumber++;
-
-            if (killNumber == sumQQren) {
-                for (int i = 0; i < qqrenObjects.size(); i++) {
+            if (qqrenRect.intersects(arrowRect)) {
+                // 发生碰撞，将丘丘人对象的指针添加到需要删除的容器中
+                if (qqrenObjects[i]->lives - atk <= 0) {
+                    qqrenObjects[i]->hide();
                     qqrenObjects[i]->setFixedSize(0, 0);
-                }
-                qqrenObjects.clear();
-                QTimer::singleShot(3000, [=]() {
-                    for (int i = 0; i < qqrenObjects.size(); i++) {
-                        qqrenObjects[i]->setFixedSize(0, 0);
+                    this->killNumber++;
+                    money++;
+                    if (killNumber == sumQQren) {
+                        QTimer::singleShot(3500, [=]() {
+                            for (int i = 0; i < qqrenObjects.size(); i++) {
+                                qqrenObjects[i]->setFixedSize(0, 0);
+                            }
+                            qqrenObjects.clear();
+
+                            emit haveKilledAllqqren();
+                            money += sumQQren + 1;
+                            score += sumQQren + 1;
+                        });
                     }
-                    qqrenObjects.clear();
-                    money += (sumQQren + 1);
-                    score += (sumQQren + 1);
-                    emit haveKilledAllqqren();
-                });
+                } else {
+                    qqrenObjects[i]->lives -= atk;
+                }
             }
         }
+        if (arr->state == 3) arr->setFixedSize(0, 0);
     }
-    if (arr->state == 3) arr->setFixedSize(0, 0);
 }
 
 void Scene01::resetKeyStates() {

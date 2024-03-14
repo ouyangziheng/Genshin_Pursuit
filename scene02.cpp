@@ -6,11 +6,6 @@ extern int waveOfMonster02;
 
 //构造函数
 Scene02::Scene02(QWidget *parent) : QMainWindow(parent), killNumber(0) {
-    // 设置背景色为纯白色
-    QPalette pal = palette();
-    pal.setColor(QPalette::Window, Qt::white);
-    setAutoFillBackground(true);
-    setPalette(pal);
     // 初始化界面和主角角色
     protectBirth = true;
     this->setFixedSize(1800, 1100);
@@ -64,6 +59,11 @@ void Scene02::createMoster() {
 
             // 创建 qqren 对象并设置随机位置
             qqren *smallqqren = new qqren(this);
+            int randomInt = QRandomGenerator::global()->bounded(101);
+            randomInt = randomInt % 2;
+            smallqqren->kindOfqq = randomInt;
+            if (randomInt == 0)
+                smallqqren->lives = 5 + 2 * waveOfMonster02;
             QTimer *timer_updateThePositionOfLinny = new QTimer(this);
             qqrenObjects.push_back(smallqqren);
             smallqqren->speed = 5 + (0.5) * waveOfMonster02;
@@ -311,24 +311,28 @@ void Scene02::checkCollision(Arrow *arr) {
         // 检查丘丘人和箭的边界框是否相交
         if (qqrenRect.intersects(arrowRect)) {
             // 发生碰撞，将丘丘人对象的指针添加到需要删除的容器中
-            qqrenObjects[i]->hide();
-            qqrenObjects[i]->setFixedSize(0, 0);
-            this->killNumber++;
-            money++;
-            if (killNumber == sumQQren + sumQQking) {
-                QTimer::singleShot(3500, [=]() {
-                    for (int i = 0; i < qqrenObjects.size(); i++) {
-                        qqrenObjects[i]->setFixedSize(0, 0);
-                    }
-                    qqrenObjects.clear();
-                    for (int i = 0; i < qqkingObjects.size(); i++) {
-                        qqkingObjects[i]->setFixedSize(0, 0);
-                    }
-                    qqkingObjects.clear();
-                    emit haveKilledAllqqren();
-                    money += (sumQQking + 1) * 5 + sumQQren + 1;
-                    score += (sumQQking + 1) * 5 + sumQQren + 1;
-                });
+            if (qqrenObjects[i]->lives - atk <= 0) {
+                qqrenObjects[i]->hide();
+                qqrenObjects[i]->setFixedSize(0, 0);
+                this->killNumber++;
+                money++;
+                if (killNumber == sumQQren + sumQQking) {
+                    QTimer::singleShot(3500, [=]() {
+                        for (int i = 0; i < qqrenObjects.size(); i++) {
+                            qqrenObjects[i]->setFixedSize(0, 0);
+                        }
+                        qqrenObjects.clear();
+                        for (int i = 0; i < qqkingObjects.size(); i++) {
+                            qqkingObjects[i]->setFixedSize(0, 0);
+                        }
+                        qqkingObjects.clear();
+                        emit haveKilledAllqqren();
+                        money += (sumQQking + 1) * 5 + sumQQren + 1;
+                        score += (sumQQking + 1) * 5 + sumQQren + 1;
+                    });
+                }
+            } else {
+                qqrenObjects[i]->lives -= atk;
             }
         }
     }
@@ -343,7 +347,7 @@ void Scene02::checkCollision(Arrow *arr) {
         // 检查丘丘王和箭的边界框是否相交
         if (qqkingRect.intersects(arrowRect)) {
             // 发生碰撞，将丘丘王对象的指针添加到需要更改的容器中
-            if (qqkingObjects[i]->lives <= 0) {
+            if (qqkingObjects[i]->lives - atk <= 0) {
                 qqkingObjects[i]->hide();
                 qqkingObjects[i]->setFixedSize(0, 0);
                 this->killNumber++;

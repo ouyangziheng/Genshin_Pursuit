@@ -18,7 +18,7 @@ void ChooseScene::victoryScene01() {
     // 创建一个QLabel，并设置图片
     QLabel *label = new QLabel(this);
     QPixmap originalPixmap(":/animation/victory.png");
-    QPixmap pixmap = originalPixmap.scaled(originalPixmap.size() / 2, Qt::KeepAspectRatio);
+    QPixmap pixmap = originalPixmap.scaled(originalPixmap.size() * 0.8, Qt::KeepAspectRatio);
     label->setPixmap(pixmap);
     label->setGeometry(centerX - pixmap.width() / 2, -pixmap.height(), pixmap.width(), pixmap.height());
 
@@ -70,11 +70,6 @@ void ChooseScene::showDecisionDialog() {
 
 //选择关卡
 ChooseScene::ChooseScene(QWidget *parent) : QMainWindow(parent) {
-    // 设置背景色为纯白色
-    QPalette pal = palette();
-    pal.setColor(QPalette::Window, Qt::white);
-    setAutoFillBackground(true);
-    setPalette(pal);
     this->setFixedSize(1800, 1100);
 
     // 场景1

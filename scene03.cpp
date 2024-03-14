@@ -6,11 +6,6 @@ extern int waveOfMonster03;
 
 //构造函数
 Scene03::Scene03(QWidget *parent) : QMainWindow(parent) {
-    // 设置背景色为纯白色
-    QPalette pal = palette();
-    pal.setColor(QPalette::Window, Qt::white);
-    setAutoFillBackground(true);
-    setPalette(pal);
     // 初始化界面和主角角色
     protectBirth = true;
     this->setFixedSize(1800, 1100);
@@ -70,6 +65,11 @@ void Scene03::createMoster() {
 
             // 创建 qqren 对象并设置随机位置
             qqren *smallqqren = new qqren(this);
+            int randomInt = QRandomGenerator::global()->bounded(101);
+            randomInt = randomInt % 2;
+            smallqqren->kindOfqq = randomInt;
+            if (randomInt == 0)
+                smallqqren->lives = 5 + 3 * waveOfMonster03;
             QTimer *timer_updateThePositionOfLinny = new QTimer(this);
             qqrenObjects.push_back(smallqqren);
             smallqqren->speed = 5 + (0.5) * waveOfMonster03;
@@ -410,7 +410,6 @@ void Scene03::checkCollision(Arrow *arr) {
     // 存储需要删除的丘丘人对象的指针
     QVector<qqren *> qqrenToDelete;
 
-    // 遍历所有丘丘人
     for (int i = 0; i < qqrenObjects.size(); i++) {
         // 获取丘丘人的边界框
         QRect qqrenRect = (qqrenObjects[i])->geometry();
@@ -418,21 +417,28 @@ void Scene03::checkCollision(Arrow *arr) {
         // 检查丘丘人和箭的边界框是否相交
         if (qqrenRect.intersects(arrowRect)) {
             // 发生碰撞，将丘丘人对象的指针添加到需要删除的容器中
-            qqrenObjects[i]->hide();
-            qqrenObjects[i]->setFixedSize(0, 0);
-            this->killNumber++;
-            money++;
-            if (killNumber == sumQQren + sumQQking + sumsyfs) {
-                qqrenObjects.clear();
-
-                qqkingObjects.clear();
-
-                syfsObjects.clear();
-                QTimer::singleShot(3500, [=]() {
-                    money += (sumsyfs + 1) * 20 + (sumQQking + 1) * 5 + sumQQren + 1;
-                    score += (sumsyfs + 1) * 20 + (sumQQking + 1) * 5 + sumQQren + 1;
-                    emit haveKilledAllqqren();
-                });
+            if (qqrenObjects[i]->lives - atk <= 0) {
+                qqrenObjects[i]->hide();
+                qqrenObjects[i]->setFixedSize(0, 0);
+                this->killNumber++;
+                money++;
+                if (killNumber == sumQQren + sumQQking + sumsyfs) {
+                    QTimer::singleShot(3500, [=]() {
+                        for (int i = 0; i < qqrenObjects.size(); i++) {
+                            qqrenObjects[i]->setFixedSize(0, 0);
+                        }
+                        qqrenObjects.clear();
+                        for (int i = 0; i < qqkingObjects.size(); i++) {
+                            qqkingObjects[i]->setFixedSize(0, 0);
+                        }
+                        qqkingObjects.clear();
+                        emit haveKilledAllqqren();
+                        money += (sumQQking + 1) * 5 + sumQQren + 1;
+                        score += (sumQQking + 1) * 5 + sumQQren + 1;
+                    });
+                }
+            } else {
+                qqrenObjects[i]->lives -= atk;
             }
         }
     }
@@ -444,7 +450,7 @@ void Scene03::checkCollision(Arrow *arr) {
         // 检查丘丘王和箭的边界框是否相交
         if (qqkingRect.intersects(arrowRect)) {
             // 发生碰撞，将丘丘王对象的指针添加到需要更改的容器中
-            if (qqkingObjects[i]->lives <= 0) {
+            if (qqkingObjects[i]->lives - atk <= 0) {
                 qqkingObjects[i]->hide();
                 qqkingObjects[i]->setFixedSize(0, 0);
                 this->killNumber++;
@@ -477,7 +483,7 @@ void Scene03::checkCollision(Arrow *arr) {
         // 检查丘丘王和箭的边界框是否相交
         if (syfsRect.intersects(arrowRect)) {
             // 发生碰撞，将丘丘王对象的指针添加到需要更改的容器中
-            if (syfsObjects[i]->lives <= 0) {
+            if (syfsObjects[i]->lives - atk <= 0) {
                 syfsObjects[i]->hide();
                 syfsObjects[i]->setFixedSize(0, 0);
                 this->killNumber++;

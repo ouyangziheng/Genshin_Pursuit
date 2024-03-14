@@ -7,11 +7,6 @@
 StartScene::StartScene(QWidget *parent)
     : QMainWindow(parent) {
     this->setFixedSize(1800, 1100);
-    // 设置背景色为纯白色
-    QPalette pal = palette();
-    pal.setColor(QPalette::Window, Qt::white);
-    setAutoFillBackground(true);
-    setPalette(pal);
 
     //创建主要界面
     MainScene *mainScene = new MainScene(this);
