@@ -1,0 +1,39 @@
+<RCC>
+    <qresource prefix="/">
+        <file>linny/01.png</file>
+        <file>linny/02.png</file>
+        <file>linny/03.png</file>
+        <file>linny/04.png</file>
+        <file>linny/05.png</file>
+        <file>linny/06.png</file>
+        <file>linny/07.png</file>
+        <file>linny/08.png</file>
+        <file>array/01.png</file>
+        <file>array/02.png</file>
+        <file>array/03.png</file>
+        <file>monster/qqren.png</file>
+        <file>animation/lose.png</file>
+        <file>animation/win.png</file>
+        <file>photos/01.png</file>
+        <file>photos/1.png</file>
+        <file>photos/2.png</file>
+        <file>photos/3.png</file>
+        <file>photos/4.png</file>
+        <file>photos/5.png</file>
+        <file>photos/6.png</file>
+        <file>photos/7.png</file>
+        <file>photos/8.png</file>
+        <file>photos/9.png</file>
+        <file>photos/10.png</file>
+        <file>photos/11.png</file>
+        <file>photos/12.png</file>
+        <file>photos/13.png</file>
+        <file>photos/14.png</file>
+        <file>photos/15.png</file>
+        <file>monster/qqking.png</file>
+        <file>syfs/1.jpeg</file>
+        <file>syfs/3.jpeg</file>
+        <file>syfs/2.jpeg</file>
+        <file>photos/666.png</file>
+    </qresource>
+</RCC>
