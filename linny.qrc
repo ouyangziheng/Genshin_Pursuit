@@ -12,8 +12,6 @@
         <file>array/02.png</file>
         <file>array/03.png</file>
         <file>monster/qqren.png</file>
-        <file>animation/lose.png</file>
-        <file>animation/win.png</file>
         <file>photos/01.png</file>
         <file>photos/1.png</file>
         <file>photos/2.png</file>
@@ -35,5 +33,6 @@
         <file>syfs/3.jpeg</file>
         <file>syfs/2.jpeg</file>
         <file>photos/666.png</file>
+        <file>animation/victory.png</file>
     </qresource>
 </RCC>

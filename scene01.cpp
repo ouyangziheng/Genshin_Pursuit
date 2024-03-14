@@ -6,6 +6,11 @@ extern int waveOfMonster01;
 
 //构造函数
 Scene01::Scene01(QWidget *parent) : QMainWindow(parent), killNumber(0) {
+    // 设置背景色为纯白色
+    QPalette pal = palette();
+    pal.setColor(QPalette::Window, Qt::white);
+    setAutoFillBackground(true);
+    setPalette(pal);
     // 初始化界面和主角角色
     protectBirth = true;
     this->setFixedSize(1800, 1100);
@@ -40,12 +45,14 @@ Scene01::Scene01(QWidget *parent) : QMainWindow(parent), killNumber(0) {
 void Scene01::createMoster() {
     this->killNumber = 0;
     this->sumQQren = waveOfMonster01 * 10 + 5 + waveOfMonster01 * waveOfMonster01;
+    qDebug() << sumQQren;
+
     this->quantityOfqqren = 0;
     QTimer *Birthofqqren = new QTimer(this);
     Birthofqqren->start(1000);
     //丘丘人行为
     connect(Birthofqqren, &QTimer::timeout, [=]() {
-        if (quantityOfqqren <= sumQQren) {
+        if (quantityOfqqren < sumQQren) {
             quantityOfqqren += 1;
 
             // 创建 qqking 对象并设置随机位置
@@ -89,9 +96,7 @@ void Scene01::createMoster() {
                         qqrenObjects[i]->setFixedSize(0, 0);
                     }
                     qqrenObjects.clear();
-
                     livesOfLinny--;
-                    qDebug() << "lives" << livesOfLinny;
                     emit defeat();
                     protectBirth = true;
                     // 这里可以写碰撞后的处理逻辑，比如林尼扣血等等
@@ -116,23 +121,24 @@ void Scene01::attack() {
 //处理互动事件
 
 //根据按键状态移动角色
+// 根据按键状态移动角色
 void Scene01::movePlayer() {
-    int step = 0.5 * velocity;// 移动步长  根据需要调整
+    int step = 0.5 * velocity;// 移动步长，根据需要调整
 
-    if (moveUp) {
-        // 向上移动
+    if (moveUp && linny->y() - step >= 0) {
+        // 向上移动，确保不超出上边界
         linny->move(linny->x(), linny->y() - step);
     }
-    if (moveDown) {
-        // 向下移动
+    if (moveDown && linny->y() + linny->height() + step <= this->height()) {
+        // 向下移动，确保不超出下边界
         linny->move(linny->x(), linny->y() + step);
     }
-    if (moveLeft) {
-        // 向左移动
+    if (moveLeft && linny->x() - step >= 0) {
+        // 向左移动，确保不超出左边界
         linny->move(linny->x() - step, linny->y());
     }
-    if (moveRight) {
-        // 向右移动
+    if (moveRight && linny->x() + linny->width() + step <= this->width()) {
+        // 向右移动，确保不超出右边界
         linny->move(linny->x() + step, linny->y());
     }
 }
@@ -219,8 +225,10 @@ void Scene01::checkCollision(Arrow *arr) {
         if (qqrenRect.intersects(arrowRect)) {
             // 发生碰撞，将丘丘人对象的指针添加到需要删除的容器中
             qqrenObjects[i]->hide();
+            money++;
             qqrenObjects[i]->setFixedSize(0, 0);
             this->killNumber++;
+
             if (killNumber == sumQQren) {
                 for (int i = 0; i < qqrenObjects.size(); i++) {
                     qqrenObjects[i]->setFixedSize(0, 0);
@@ -231,9 +239,9 @@ void Scene01::checkCollision(Arrow *arr) {
                         qqrenObjects[i]->setFixedSize(0, 0);
                     }
                     qqrenObjects.clear();
-                    emit haveKilledAllqqren();
                     money += (sumQQren + 1);
                     score += (sumQQren + 1);
+                    emit haveKilledAllqqren();
                 });
             }
         }

@@ -6,6 +6,7 @@
 #include <QKeyEvent>
 #include <QMainWindow>
 #include <QMouseEvent>
+#include <QPalette>
 #include <QRandomGenerator>
 #include <QSignalMapper>
 #include <QThread>

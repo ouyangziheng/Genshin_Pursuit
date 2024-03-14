@@ -1,7 +1,7 @@
 #include "myequipment.h"
 
 extern int money;
-extern int velocity, attack, maxLives;
+extern int velocity, atk, maxLives;
 
 QVector<QString> stringName = {"猎弓", "历练的猎弓", "弹弓", "烈阳之嗣", "静谧之曲",
                                "若水", "飞雷之弦振", "最初的大魔术", "阿莫斯之弓",
@@ -26,8 +26,15 @@ QVector<QString> stringDetail = {"攻击力 +1<br>",
                                  "移速 +3<br>"};
 
 QVector<int> costs = {1, 2, 5, 10, 10, 100, 100, 100, 100, 50, 50, 50, 50, 50};
+
 myEquipment::myEquipment(QWidget *parent) : QMainWindow(parent) {
+    qDebug() << money;
     this->setFixedSize(1800, 1100);
+    // 设置背景色为纯白色
+    QPalette pal = palette();
+    pal.setColor(QPalette::Window, Qt::white);
+    setAutoFillBackground(true);
+    setPalette(pal);
     QVector<QPushButton *> recordOfButton;
     //设置基本信息
     {// 创建标题按钮
@@ -90,7 +97,12 @@ myEquipment::myEquipment(QWidget *parent) : QMainWindow(parent) {
     // 创建标签显示金币数量
     {
         QLabel *moneyLabel = new QLabel(this);
-        moneyLabel->setText("金币数: " + QString::number(money));
+        QTimer *updateLabel = new QTimer(this);
+        updateLabel->start(1000);
+        connect(updateLabel, &QTimer::timeout, [=]() {
+            moneyLabel->setText("金币数: " + QString::number(money));
+        });
+
         moneyLabel->setGeometry(65, 485, 400, 51);
         moneyLabel->setStyleSheet("QLabel { color: #B8860B; font-size:50px; font-weight: bold; }");
     }
@@ -160,49 +172,48 @@ void myEquipment::handleButtonClicked() {
             if (money >= cost) {
                 // 检查用户金钱是否足够购买
                 money -= cost;// 扣除购买所需金钱
-                moneyLabel->setText("金币数: " + QString::number(money));
 
                 switch (equipmentIndex) {
                 case 1:// 猎弓
-                    attack += 1;
+                    atk += 1;
                     break;
                 case 2:// 历练的猎弓
-                    attack += 3;
+                    atk += 3;
                     break;
                 case 3:// 弹弓
-                    attack += 8;
+                    atk += 8;
                     break;
                 case 4:// 烈阳之嗣
-                    attack += 10;
+                    atk += 10;
                     velocity += 1;
                     break;
                 case 5:// 静谧之曲
-                    attack += 15;
+                    atk += 15;
                     break;
                 case 6:// 若水
-                    attack += 20;
+                    atk += 20;
                     maxLives += 3;
                     break;
                 case 7:// 飞雷之弦振
-                    attack += 20;
+                    atk += 20;
                     velocity += 1;
                     break;
                 case 8:// 最初的大魔术
-                    attack += 15;
+                    atk += 15;
                     velocity += 3;
                     break;
                 case 9:// 阿莫斯之弓
-                    attack += 30;
+                    atk += 30;
                     break;
                 case 10:// 生之花
                     maxLives += 7;
                     break;
                 case 11:// 死之羽
-                    attack += 10;
+                    atk += 10;
                     maxLives += 3;
                     break;
                 case 12:// 时之沙
-                    attack += 10;
+                    atk += 10;
                     maxLives += 1;
                     velocity += 2;
                     break;

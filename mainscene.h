@@ -2,6 +2,7 @@
 #define MAINSCENE_H
 
 #include <QMainWindow>
+#include <QPalette>
 #include <QPushButton>
 
 #include "choosescene.h"

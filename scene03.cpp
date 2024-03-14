@@ -1,11 +1,16 @@
 //qq王
 #include "scene03.h"
-extern int money, score, velocity;
+extern int money, score, velocity, atk;
 extern int livesOfLinny, maxLives;
 extern int waveOfMonster03;
 
 //构造函数
 Scene03::Scene03(QWidget *parent) : QMainWindow(parent) {
+    // 设置背景色为纯白色
+    QPalette pal = palette();
+    pal.setColor(QPalette::Window, Qt::white);
+    setAutoFillBackground(true);
+    setPalette(pal);
     // 初始化界面和主角角色
     protectBirth = true;
     this->setFixedSize(1800, 1100);
@@ -45,7 +50,6 @@ void Scene03::createMoster() {
 
     this->sumsyfs = 1 + waveOfMonster03 * +(0.05) * waveOfMonster03 * waveOfMonster03;
 
-    qDebug() << "a????" << (sumQQren + sumQQking + sumsyfs) << sumQQren << sumQQking << sumsyfs << killNumber;
     this->quantityOfqqren = 0;
     this->quantityOfqqking = 0;
     this->quantityOfsyfs = 0;
@@ -314,22 +318,22 @@ void Scene03::attack() {
 
 //根据按键状态移动角色
 void Scene03::movePlayer() {
-    int step = 0.5 * velocity;// 移动步长  根据需要调整
+    int step = 0.5 * velocity;// 移动步长，根据需要调整
 
-    if (moveUp) {
-        // 向上移动
+    if (moveUp && linny->y() - step >= 0) {
+        // 向上移动，确保不超出上边界
         linny->move(linny->x(), linny->y() - step);
     }
-    if (moveDown) {
-        // 向下移动
+    if (moveDown && linny->y() + linny->height() + step <= this->height()) {
+        // 向下移动，确保不超出下边界
         linny->move(linny->x(), linny->y() + step);
     }
-    if (moveLeft) {
-        // 向左移动
+    if (moveLeft && linny->x() - step >= 0) {
+        // 向左移动，确保不超出左边界
         linny->move(linny->x() - step, linny->y());
     }
-    if (moveRight) {
-        // 向右移动
+    if (moveRight && linny->x() + linny->width() + step <= this->width()) {
+        // 向右移动，确保不超出右边界
         linny->move(linny->x() + step, linny->y());
     }
 }
@@ -417,6 +421,7 @@ void Scene03::checkCollision(Arrow *arr) {
             qqrenObjects[i]->hide();
             qqrenObjects[i]->setFixedSize(0, 0);
             this->killNumber++;
+            money++;
             if (killNumber == sumQQren + sumQQking + sumsyfs) {
                 qqrenObjects.clear();
 
@@ -424,9 +429,9 @@ void Scene03::checkCollision(Arrow *arr) {
 
                 syfsObjects.clear();
                 QTimer::singleShot(3500, [=]() {
+                    money += (sumsyfs + 1) * 20 + (sumQQking + 1) * 5 + sumQQren + 1;
+                    score += (sumsyfs + 1) * 20 + (sumQQking + 1) * 5 + sumQQren + 1;
                     emit haveKilledAllqqren();
-                    money += (sumsyfs + 1) * 20;
-                    score += (sumsyfs + 1) * 20;
                 });
             }
         }
@@ -443,6 +448,7 @@ void Scene03::checkCollision(Arrow *arr) {
                 qqkingObjects[i]->hide();
                 qqkingObjects[i]->setFixedSize(0, 0);
                 this->killNumber++;
+                money += 5;
 
                 if (killNumber == sumQQren + sumQQking + sumsyfs) {
                     qqrenObjects.clear();
@@ -452,14 +458,13 @@ void Scene03::checkCollision(Arrow *arr) {
                     syfsObjects.clear();
 
                     QTimer::singleShot(3500, [=]() {
+                        money += (sumsyfs + 1) * 20 + (sumQQking + 1) * 5 + sumQQren + 1;
+                        score += (sumsyfs + 1) * 20 + (sumQQking + 1) * 5 + sumQQren + 1;
                         emit haveKilledAllqqren();
-                        money += (sumsyfs + 1) * 20;
-                        score += (sumsyfs + 1) * 20;
                     });
                 }
             } else {
-                qqkingObjects[i]->lives -= 1;
-                qDebug() << qqkingObjects[i]->lives;
+                qqkingObjects[i]->lives -= atk;
             }
         }
     }
@@ -476,21 +481,19 @@ void Scene03::checkCollision(Arrow *arr) {
                 syfsObjects[i]->hide();
                 syfsObjects[i]->setFixedSize(0, 0);
                 this->killNumber++;
-
+                money += 20;
                 if (killNumber == sumQQren + sumQQking + sumsyfs) {
                     qqrenObjects.clear();
-
                     qqkingObjects.clear();
-
                     syfsObjects.clear();
                     QTimer::singleShot(3500, [=]() {
+                        money += (sumsyfs + 1) * 20 + (sumQQking + 1) * 5 + sumQQren + 1;
+                        score += (sumsyfs + 1) * 20 + (sumQQking + 1) * 5 + sumQQren + 1;
                         emit haveKilledAllqqren();
-                        money += (sumsyfs + 1) * 20;
-                        score += (sumsyfs + 1) * 20;
                     });
                 }
             } else {
-                syfsObjects[i]->lives -= 1;
+                syfsObjects[i]->lives -= atk;
             }
         }
     }

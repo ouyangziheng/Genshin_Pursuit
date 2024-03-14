@@ -1,11 +1,16 @@
 //qq王
 #include "scene02.h"
-extern int money, score, velocity;
+extern int money, score, velocity, atk;
 extern int livesOfLinny, maxLives;
 extern int waveOfMonster02;
 
 //构造函数
 Scene02::Scene02(QWidget *parent) : QMainWindow(parent), killNumber(0) {
+    // 设置背景色为纯白色
+    QPalette pal = palette();
+    pal.setColor(QPalette::Window, Qt::white);
+    setAutoFillBackground(true);
+    setPalette(pal);
     // 初始化界面和主角角色
     protectBirth = true;
     this->setFixedSize(1800, 1100);
@@ -54,7 +59,7 @@ void Scene02::createMoster() {
 
     //丘丘人行为
     connect(Birthofqqren, &QTimer::timeout, [=]() {
-        if (quantityOfqqren <= sumQQren) {
+        if (quantityOfqqren < sumQQren) {
             quantityOfqqren += 1;
 
             // 创建 qqren 对象并设置随机位置
@@ -113,7 +118,7 @@ void Scene02::createMoster() {
 
     //丘丘王行为
     connect(Birthofqqking, &QTimer::timeout, [=]() {
-        if (quantityOfqqking <= sumQQking) {
+        if (quantityOfqqking < sumQQking) {
             quantityOfqqking += 1;
 
             // 创建 qqKING 对象并设置随机位置
@@ -206,22 +211,22 @@ void Scene02::attack() {
 
 //根据按键状态移动角色
 void Scene02::movePlayer() {
-    int step = 0.5 * velocity;// 移动步长  根据需要调整
+    int step = 0.5 * velocity;// 移动步长，根据需要调整
 
-    if (moveUp) {
-        // 向上移动
+    if (moveUp && linny->y() - step >= 0) {
+        // 向上移动，确保不超出上边界
         linny->move(linny->x(), linny->y() - step);
     }
-    if (moveDown) {
-        // 向下移动
+    if (moveDown && linny->y() + linny->height() + step <= this->height()) {
+        // 向下移动，确保不超出下边界
         linny->move(linny->x(), linny->y() + step);
     }
-    if (moveLeft) {
-        // 向左移动
+    if (moveLeft && linny->x() - step >= 0) {
+        // 向左移动，确保不超出左边界
         linny->move(linny->x() - step, linny->y());
     }
-    if (moveRight) {
-        // 向右移动
+    if (moveRight && linny->x() + linny->width() + step <= this->width()) {
+        // 向右移动，确保不超出右边界
         linny->move(linny->x() + step, linny->y());
     }
 }
@@ -309,6 +314,7 @@ void Scene02::checkCollision(Arrow *arr) {
             qqrenObjects[i]->hide();
             qqrenObjects[i]->setFixedSize(0, 0);
             this->killNumber++;
+            money++;
             if (killNumber == sumQQren + sumQQking) {
                 QTimer::singleShot(3500, [=]() {
                     for (int i = 0; i < qqrenObjects.size(); i++) {
@@ -320,8 +326,8 @@ void Scene02::checkCollision(Arrow *arr) {
                     }
                     qqkingObjects.clear();
                     emit haveKilledAllqqren();
-                    money += (sumQQking + 1) * 5;
-                    score += (sumQQking + 1) * 5;
+                    money += (sumQQking + 1) * 5 + sumQQren + 1;
+                    score += (sumQQking + 1) * 5 + sumQQren + 1;
                 });
             }
         }
@@ -341,6 +347,7 @@ void Scene02::checkCollision(Arrow *arr) {
                 qqkingObjects[i]->hide();
                 qqkingObjects[i]->setFixedSize(0, 0);
                 this->killNumber++;
+                money += 5;
 
                 if (killNumber == sumQQren + sumQQking) {
                     for (int i = 0; i < qqrenObjects.size(); i++) {
@@ -352,14 +359,13 @@ void Scene02::checkCollision(Arrow *arr) {
                     }
                     qqkingObjects.clear();
                     QTimer::singleShot(3500, [=]() {
+                        money += (sumQQking + 1) * 5 + sumQQren + 1;
+                        score += (sumQQking + 1) * 5 + sumQQren + 1;
                         emit haveKilledAllqqren();
-                        money += (sumQQking * 5 + 1);
-                        score += (sumQQking * 5 + 1);
                     });
                 }
             } else {
-                qqkingObjects[i]->lives -= 1;
-                qDebug() << qqkingObjects[i]->lives;
+                qqkingObjects[i]->lives -= atk;
             }
         }
     }

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QObject>
+#include <QPalette>
 #include <QPushButton>
 
 #include "scene01.h"

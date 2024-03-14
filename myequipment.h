@@ -2,11 +2,14 @@
 #define MYEQUIPMENT_H
 
 #include <QApplication>
+#include <QDebug>
 #include <QGridLayout>
 #include <QLabel>
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QPalette>
 #include <QPushButton>
+#include <QTimer>
 #include <QVBoxLayout>
 
 class myEquipment : public QMainWindow {
