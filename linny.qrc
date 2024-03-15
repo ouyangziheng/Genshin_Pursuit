@@ -34,5 +34,6 @@
         <file>monster/1.png</file>
         <file>monster/2.png</file>
         <file>animation/victory.png</file>
+        <file>background/1.png</file>
     </qresource>
 </RCC>
