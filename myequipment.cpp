@@ -30,21 +30,36 @@ QVector<int> costs = {1, 2, 5, 10, 10, 100, 100, 100, 100, 50, 50, 50, 50, 50};
 myEquipment::myEquipment(QWidget *parent) : QMainWindow(parent) {
     qDebug() << money;
     this->setFixedSize(1800, 1100);
+    // 设置背景图片
+    QString imagePath = ":/background/4.jpg";// 设置背景图片路径
 
+    // 检查图片是否存在
+    {
+        QPixmap backgroundImage(imagePath);// 加载背景图片
+        if (!backgroundImage.isNull()) {
+            backgroundImage = backgroundImage.scaled(this->size(), Qt::KeepAspectRatioByExpanding);// 调整图片尺寸以适应窗口大小
+            QPalette palette;
+            palette.setBrush(this->backgroundRole(), QBrush(backgroundImage));
+            this->setPalette(palette);
+        }
+    }
     QVector<QPushButton *> recordOfButton;
     //设置基本信息
     {// 创建标题按钮
         QLabel *titleButton = new QLabel("欢迎来到多莉的商城", this);
-        titleButton->setGeometry(500, 130, 800, 100);// 设置按钮位置和大小
+        titleButton->setGeometry(380, 95, 800, 100);// 设置按钮位置和大小
 
         // 创建字体对象
-        QFont titleFont("华文行楷", 30, QFont::Bold);
+        QFont titleFont("华文行楷", 40, QFont::Bold);
 
         // 设置按钮字体和大小
         titleButton->setFont(titleFont);
 
         // 设置文本居中对齐
         titleButton->setAlignment(Qt::AlignCenter);
+
+        // 设置文本颜色
+        titleButton->setStyleSheet("color:#446351;");
 
         // 显示标题按钮
         titleButton->show();
@@ -53,41 +68,38 @@ myEquipment::myEquipment(QWidget *parent) : QMainWindow(parent) {
     // 创建退出按钮
     {
         QPushButton *quitButton = new QPushButton("离开", this);
-        quitButton->setGeometry(1560, 40, 130, 60);// 设置按钮位置和大小
-        quitButton->setStyleSheet("QPushButton { background-color: #FF6347; color: white; }");
+        quitButton->setGeometry(1460, 80, 150, 80);// 设置按钮位置和大小
+        quitButton->setStyleSheet(
+            "color:#425449;"
+            "background-color:#EFF1DB;"
+            "font-weight:bold;"
+            "text-align: center;"// 文本水平居中
+            "border-radius: 20px;"
+            "border-width: 5px;"
+            "border-color: #425449;"
+            "font-size: 30px;"
+            "border-style: solid;");
+
         connect(quitButton, &QPushButton::clicked, [=]() {
             emit returnMainScene();
         });
     }
 
-    // 可爱的多莉耶
-    {
-        QPushButton *pictureButton = new QPushButton(this);
-        pictureButton->setGeometry(40, 65, 400, 400);
+    {// 可爱的多莉耶
+        QLabel *pictureLabel = new QLabel(this);
+        pictureLabel->setGeometry(1200, 25, 200, 200);// 设置 QLabel 的位置和大小
 
-        QIcon icon(":/photos/01.png");
+        // 加载图像
+        QPixmap pixmap(":/photos/77.png");
 
-        // 设置图像到按钮上
-        pictureButton->setIcon(icon);
+        // 缩放图像以适应 QLabel
+        QPixmap scaledPixmap = pixmap.scaled(QSize(200, 200), Qt::KeepAspectRatio);
 
-        // 获取按钮的大小
-        QSize buttonSize = pictureButton->size();
+        // 设置图像到 QLabel 上
+        pictureLabel->setPixmap(scaledPixmap);
 
-        // 将图像缩放到按钮大小
-        QSize scaledSize(buttonSize.width() * 1.0, buttonSize.height() * 1.0);
-        QPixmap pixmap = icon.pixmap(scaledSize);
-
-        // 设置调整大小后的图像到按钮上
-        pictureButton->setIcon(QIcon(pixmap));
-
-        // 设置按钮的大小以适应图像大小
-        pictureButton->setIconSize(scaledSize);
-
-        // 设置按钮的固定大小
-        pictureButton->setFixedSize(buttonSize);
-
-        // 显示按钮
-        pictureButton->show();
+        // 显示 QLabel
+        pictureLabel->show();
     }
 
     // 创建标签显示金币数量
@@ -99,8 +111,8 @@ myEquipment::myEquipment(QWidget *parent) : QMainWindow(parent) {
             moneyLabel->setText("金币数: " + QString::number(money));
         });
 
-        moneyLabel->setGeometry(65, 485, 400, 51);
-        moneyLabel->setStyleSheet("QLabel { color: #B8860B; font-size:50px; font-weight: bold; }");
+        moneyLabel->setGeometry(65, 255, 400, 51);
+        moneyLabel->setStyleSheet("QLabel { color: #827B58; font-size:58px; font-weight: bold; }");
     }
 
     // 创建按钮网格
@@ -109,12 +121,23 @@ myEquipment::myEquipment(QWidget *parent) : QMainWindow(parent) {
         int buttonHeight = 200;
         int horizontalSpacing = 20;
         int verticalSpacing = 20;
-        int startX = 100 + (this->width() - buttonWidth * 5 - horizontalSpacing * 3) / 2;
-        int startY = 300;
+        int startX = -100 + (this->width() - buttonWidth * 5 - horizontalSpacing * 3) / 2;
+        int startY = 350;
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 5; col++) {
                 QPushButton *button = new QPushButton(this);
                 button->setProperty("equipmentIndex", row * 5 + col + 1);
+                //#86A8A0  #EFF1DB
+                button->setStyleSheet(
+                    "color:#86A8A0;"
+                    "background-color:#EFF1DB;"
+                    "font-weight:bold;"
+                    "text-align: center;"// 文本水平居中
+                    "border-radius: 20px;"
+                    "border-width: 8px;"
+                    "border-color: #86A8A0;"
+                    "font-size: 30px;"
+                    "border-style: solid;");
                 recordOfButton.push_back(button);
 
                 int x = startX + col * (buttonWidth + horizontalSpacing);
@@ -124,7 +147,7 @@ myEquipment::myEquipment(QWidget *parent) : QMainWindow(parent) {
 
                 // 缩放图像
                 QPixmap pixmap(QString(":/photos/%1.png").arg(row * 5 + col + 1));
-                pixmap = pixmap.scaled(160, 160, Qt::KeepAspectRatio);// 将缩放后的图像重新赋值给pixmap
+                pixmap = pixmap.scaled(165, 165, Qt::KeepAspectRatio);// 将缩放后的图像重新赋值给pixmap
 
                 // 设置调整大小后的图像到按钮上
                 button->setIcon(QIcon(pixmap));

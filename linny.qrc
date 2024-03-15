@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>array/03.png</file>
-        <file>photos/01.png</file>
         <file>photos/1.png</file>
         <file>photos/2.png</file>
         <file>photos/3.png</file>
@@ -35,7 +34,10 @@
         <file>animation/victory.png</file>
         <file>background/1.png</file>
         <file>background/2.png</file>
-        <file>hotel/1.png</file>
         <file>background/3.png</file>
+        <file>background/789.png</file>
+        <file>background/4.jpg</file>
+        <file>photos/77.png</file>
+        <file>hotel/1.png</file>
     </qresource>
 </RCC>

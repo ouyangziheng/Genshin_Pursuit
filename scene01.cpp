@@ -7,6 +7,18 @@ extern int waveOfMonster01;
 
 //构造函数
 Scene01::Scene01(QWidget *parent) : QMainWindow(parent), killNumber(0) {
+    QString imagePath = ":/background/789.png";// 设置背景图片路径
+
+    // 检查图片是否存在
+    if (QFile::exists(imagePath)) {
+        QPixmap backgroundImage(imagePath);// 加载背景图片
+        if (!backgroundImage.isNull()) {
+            backgroundImage = backgroundImage.scaled(this->size(), Qt::KeepAspectRatioByExpanding);// 调整图片尺寸以适应窗口大小
+            QPalette palette;
+            palette.setBrush(this->backgroundRole(), QBrush(backgroundImage));
+            this->setPalette(palette);
+        }
+    }
     // 初始化界面和主角角色
     protectBirth = true;
     this->setFixedSize(1800, 1100);

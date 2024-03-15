@@ -4,13 +4,22 @@ extern int money, maxLives, livesOfLinny;
 int n = 0;
 
 Hotel::Hotel(QWidget *parent) : QMainWindow(parent) {
-    this->setFixedSize(1100, 1100);
+    this->setFixedSize(1800, 1100);
 
     // 创建退出按钮
 
-    QPushButton *quitButton = new QPushButton("离开", this);
-    quitButton->setGeometry(1560, 40, 130, 60);// 设置按钮位置和大小
-    quitButton->setStyleSheet("QPushButton { background-color:  #FFB6C1; color : #003C9D; }");
+    QPushButton *quitButton = new QPushButton("离开酒店", this);
+    quitButton->setGeometry(1020, 730, 280, 80);// 设置按钮位置和大小
+    quitButton->setStyleSheet(
+        "color:#4D3B33;"
+        "background-color:#F7E2B5;"
+        "font-weight:bold;"
+        "text-align: center;"// 文本水平居中
+        "border-radius: 20px;"
+        "border-width: 2px;"
+        "border-color: #4D3B33;"
+        "border-style: solid;"
+        "border-width: 5px;");
     connect(quitButton, &QPushButton::clicked, [=]() {
         emit returnMainScene();
     });
@@ -18,8 +27,17 @@ Hotel::Hotel(QWidget *parent) : QMainWindow(parent) {
     // 创建进入酒店按钮
     QPushButton *enterHotelButton = new QPushButton(this);
     enterHotelButton->setText("进入酒店");
-    enterHotelButton->setGeometry(705, 800, 300, 300);
-    enterHotelButton->setStyleSheet("QPushButton { background-color: transparent; border: none; font-size: 20px; color: #FFFFFF; }");
+    enterHotelButton->setGeometry(1020, 630, 280, 80);
+    enterHotelButton->setStyleSheet(
+        "color:#4D3B33;"
+        "background-color:#F7E2B5;"
+        "font-weight:bold;"
+        "text-align: center;"// 文本水平居中
+        "border-radius: 20px;"
+        "border-width: 2px;"
+        "border-color: #4D3B33;"
+        "border-style: solid;"
+        "border-width: 5px;");
 
     // 连接进入酒店按钮的点击事件到槽函数
     connect(enterHotelButton, &QPushButton::clicked, [=]() {
