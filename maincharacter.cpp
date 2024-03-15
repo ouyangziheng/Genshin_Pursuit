@@ -4,7 +4,7 @@
 MainCharacter::MainCharacter(QWidget *parent) : QLabel(parent) {
     isImage = 0;
     QTimer *timerOfLinny = new QTimer(this);
-    this->setFixedSize(60, 60);
+    this->setFixedSize(72, 72);
 
     timerOfLinny->start(600);
     connect(timerOfLinny, &QTimer::timeout, this, [=]() {
@@ -26,7 +26,7 @@ void MainCharacter::paintEvent(QPaintEvent *) {
     pixOfCharacter.load(mess);
 
     //图片放缩
-    pixOfCharacter = pixOfCharacter.scaled(60, 60, Qt::KeepAspectRatio);
+    pixOfCharacter = pixOfCharacter.scaled(72, 72, Qt::KeepAspectRatio);
 
     // 在绘图设备上绘制缩放后的图片
     painterOfCharacter.drawPixmap(0, 0, pixOfCharacter);

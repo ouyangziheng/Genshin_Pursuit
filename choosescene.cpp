@@ -71,13 +71,40 @@ void ChooseScene::showDecisionDialog() {
 //选择关卡
 ChooseScene::ChooseScene(QWidget *parent) : QMainWindow(parent) {
     this->setFixedSize(1800, 1100);
+    // 设置背景图片
+    QString imagePath = ":/background/3.png";// 设置背景图片路径
+
+    // 检查图片是否存在
+    if (QFile::exists(imagePath)) {
+        QPixmap backgroundImage(imagePath);// 加载背景图片
+        if (!backgroundImage.isNull()) {
+            backgroundImage = backgroundImage.scaled(this->size(), Qt::KeepAspectRatioByExpanding);// 调整图片尺寸以适应窗口大小
+            QPalette palette;
+            palette.setBrush(this->backgroundRole(), QBrush(backgroundImage));
+            this->setPalette(palette);
+        }
+    }
 
     // 场景1
     {
         QPushButton *scene1Button = new QPushButton(this);
         scene1Button->setText("丘丘人的反击");
-        scene1Button->setFixedSize(500, 80);
-        scene1Button->move(700, 600);
+        scene1Button->setFixedSize(200, 60);
+        scene1Button->move(56, 580);
+
+        //#D1B890 #635742
+        scene1Button->setStyleSheet(
+            "color:#635742;"
+            "background-color:#D1B890;"
+            "font-weight:bold;"
+            "text-align: center;"// 文本水平居中
+            "border-radius: 20px;"
+            "border-width: 2px;"
+            "border-color: #635742;"
+            "font-size: 30px;"
+            "border-style: solid;"
+            "border-width: 5px;"
+            "border-color: #635742");
 
         //连接场景1
 
@@ -127,10 +154,22 @@ ChooseScene::ChooseScene(QWidget *parent) : QMainWindow(parent) {
     {
         QPushButton *scene2Button = new QPushButton(this);
         scene2Button->setText("丘丘王的复仇");
-        scene2Button->setFixedSize(500, 80);
-        scene2Button->move(700, 700);
+        scene2Button->setFixedSize(200, 60);
+        scene2Button->move(503, 620);
+        scene2Button->setStyleSheet(
+            "color:#635742;"
+            "background-color:#D1B890;"
+            "font-weight:bold;"
+            "text-align: center;"// 文本水平居中
+            "border-radius: 20px;"
+            "border-width: 2px;"
+            "border-color: #635742;"
+            "font-size: 30px;"
+            "border-style: solid;"
+            "border-width: 5px;"
+            "border-color: #635742");
 
-        //连接场景1
+        //连接场景2
         Scene02 *s2 = new Scene02(this);
 
         connect(scene2Button, &QPushButton::clicked, [=]() {
@@ -152,7 +191,7 @@ ChooseScene::ChooseScene(QWidget *parent) : QMainWindow(parent) {
                     waveOfMonster02++;
                     s2->resetKeyStates();
                     s2->stopMove();
-                    s2->linny->move(900, 550);
+                    s2->linny->move(888, 550);
                     s2->close();
                     this->show();
                 });
@@ -178,8 +217,20 @@ ChooseScene::ChooseScene(QWidget *parent) : QMainWindow(parent) {
     {
         QPushButton *scene3Button = new QPushButton(this);
         scene3Button->setText("深渊的注视");
-        scene3Button->setFixedSize(500, 80);
-        scene3Button->move(700, 800);
+        scene3Button->setFixedSize(200, 60);
+        scene3Button->move(1488, 320);
+        scene3Button->setStyleSheet(
+            "color:#635742;"
+            "background-color:#D1B890;"
+            "font-weight:bold;"
+            "text-align: center;"// 文本水平居中
+            "border-radius: 20px;"
+            "border-width: 2px;"
+            "border-color: #635742;"
+            "font-size: 30px;"
+            "border-style: solid;"
+            "border-width: 5px;"
+            "border-color: #635742");
 
         //连接场景
         Scene03 *s3 = new Scene03(this);
@@ -224,10 +275,22 @@ ChooseScene::ChooseScene(QWidget *parent) : QMainWindow(parent) {
 
     // 返回
     {
+        //#B5B48C  ##5E5A3D
         QPushButton *exitButton = new QPushButton(this);
+        exitButton->setStyleSheet(
+            "color:#5E5A3D;"
+            "background-color:#B5B48C;"
+            "font-weight:bold;"
+            "text-align: center;"// 文本水平居中
+            "border-radius: 20px;"
+            "border-width: 3px;"
+            "border-color: #5E5A3D;"
+            "font-size: 30px;"
+            "border-style: solid;");
+
         exitButton->setText("返回");
-        exitButton->setFixedSize(500, 80);
-        exitButton->move(700, 900);
+        exitButton->setFixedSize(100, 50);
+        exitButton->move(800, 900);
         connect(exitButton, &QPushButton::clicked, [=]() {
             emit returnMainscene();
         });

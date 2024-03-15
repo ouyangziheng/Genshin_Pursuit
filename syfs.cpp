@@ -22,7 +22,7 @@ void syfs::paintEvent(QPaintEvent *) {
 
     // 生成深渊法师的图片路径
     int t = image % 3 + 1;
-    QString imagePath = QString(":/syfs/%1.jpeg").arg(t);
+    QString imagePath = QString(":/syfs/%1.png").arg(t);
     pix.load(imagePath);
 
     // 图片放缩

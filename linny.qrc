@@ -18,7 +18,6 @@
         <file>photos/14.png</file>
         <file>photos/15.png</file>
         <file>monster/qqking.png</file>
-        <file>photos/666.png</file>
         <file>linny/02.png</file>
         <file>linny/03.png</file>
         <file>linny/04.png</file>
@@ -35,5 +34,8 @@
         <file>monster/2.png</file>
         <file>animation/victory.png</file>
         <file>background/1.png</file>
+        <file>background/2.png</file>
+        <file>hotel/1.png</file>
+        <file>background/3.png</file>
     </qresource>
 </RCC>

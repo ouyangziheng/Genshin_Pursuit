@@ -8,7 +8,7 @@
 // 构造函数
 qqking::qqking(QWidget *parent) : QLabel(parent) {
     isQQkingAlive = true;
-    this->setFixedSize(90, 90);
+    this->setFixedSize(100, 100);
 }
 
 //设置位置
@@ -39,7 +39,7 @@ void qqking::paintEvent(QPaintEvent *) {
     pixOfCharacter.load(":/monster/qqking.png");
 
     // 图片放缩
-    pixOfCharacter = pixOfCharacter.scaled(90, 90, Qt::KeepAspectRatio);
+    pixOfCharacter = pixOfCharacter.scaled(100, 100, Qt::KeepAspectRatio);
 
     // 在绘图设备上绘制缩放后的图片
     painterOfCharacter.drawPixmap(0, 0, pixOfCharacter);

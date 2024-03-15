@@ -4,7 +4,7 @@ extern int money, maxLives, livesOfLinny;
 int n = 0;
 
 Hotel::Hotel(QWidget *parent) : QMainWindow(parent) {
-    this->setFixedSize(1800, 1100);
+    this->setFixedSize(1100, 1100);
 
     // 创建退出按钮
 
@@ -51,49 +51,11 @@ void Hotel::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);// 设置抗锯齿
 
     // 加载图片
-    QPixmap pixmap(":/photos/666.png");
+    QPixmap pixmap(":/hotel/1.png");
 
     // 绘制图片
     painter.drawPixmap(0, 0, width(), height(), pixmap);
 
     // 绘制完成后调用父类的 paintEvent() 函数以确保正确的绘图行为
     QWidget::paintEvent(event);
-}
-
-//失败场景
-void Hotel::DefeatHotel() {
-    // 获取窗口的中心位置
-    int centerX = width() / 2;
-    int centerY = height() / 2;
-
-    // 创建一个QLabel，并设置图片
-    QLabel *label = new QLabel(this);
-    QPixmap pixmap(":/animation/lose    最喜欢即？ +.png");
-    label->setPixmap(pixmap);
-    label->setGeometry(centerX - pixmap.width() / 2, -pixmap.height(), pixmap.width(), pixmap.height());
-
-    // 创建一个失败动画，让label对象从顶部跳跃到中心位置
-    QPropertyAnimation *defeatAnimation = new QPropertyAnimation(label, "geometry", this);
-    defeatAnimation->setDuration(1000);
-    defeatAnimation->setStartValue(QRect(centerX - pixmap.width() / 2, -pixmap.height(), pixmap.width(), pixmap.height()));
-    defeatAnimation->setEndValue(QRect(centerX - pixmap.width() / 2, centerY - pixmap.height() / 2, pixmap.width(), pixmap.height()));
-
-    // 添加弹跳效果
-    defeatAnimation->setEasingCurve(QEasingCurve::OutBounce);
-
-    // 创建一个停留动画，在动画结束后停留4秒钟
-    QPropertyAnimation *stayAnimation = new QPropertyAnimation(label, "geometry", this);
-    stayAnimation->setDuration(4000);
-    stayAnimation->setStartValue(defeatAnimation->endValue());
-    stayAnimation->setEndValue(defeatAnimation->endValue());
-
-    // 连接停留动画的finished()信号到槽函数，用于在动画完成后删除相关对象
-    connect(stayAnimation, &QPropertyAnimation::finished, label, &QObject::deleteLater);
-    connect(stayAnimation, &QPropertyAnimation::finished, stayAnimation, &QObject::deleteLater);
-
-    // 启动动画，先执行下降动画，然后执行停留动画
-    connect(defeatAnimation, &QPropertyAnimation::finished, [=]() {
-        stayAnimation->start();
-    });
-    defeatAnimation->start();
 }
