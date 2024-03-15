@@ -60,4 +60,3 @@ RESOURCES += \
 FORMS += \
     introduction.ui
 
-
