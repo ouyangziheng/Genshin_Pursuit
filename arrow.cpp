@@ -3,7 +3,7 @@
 Arrow::Arrow(const QPoint& initialPosition, QMainWindow* parent)
     : QLabel(parent), targetPosition(0, 0) {
     setAlignment(Qt::AlignCenter);
-    setFixedSize(50, 50);
+    setFixedSize(60, 60);
     isFirstImage = 1;
     setInitialPosition(initialPosition);
 
@@ -56,13 +56,13 @@ void Arrow::paintEvent(QPaintEvent* event) {
     QPixmap pixOfArrow;
     if (isFirstImage == 1) {
         pixOfArrow = QPixmap(":/array/01.png");
-        pixOfArrow = pixOfArrow.scaled(50, 50, Qt::KeepAspectRatio);
+        pixOfArrow = pixOfArrow.scaled(60, 60, Qt::KeepAspectRatio);
     } else if (isFirstImage == 2) {
         pixOfArrow = QPixmap(":/array/02.png");
-        pixOfArrow = pixOfArrow.scaled(50, 50, Qt::KeepAspectRatio);
+        pixOfArrow = pixOfArrow.scaled(60, 60, Qt::KeepAspectRatio);
     } else if (isFirstImage == 3) {
         pixOfArrow = QPixmap(":/array/03.png");
-        pixOfArrow = pixOfArrow.scaled(100, 100, Qt::KeepAspectRatio);
+        pixOfArrow = pixOfArrow.scaled(120, 120, Qt::KeepAspectRatio);
         this->setFixedSize(120, 120);
     }
     // 在箭头位置绘制箭头图片

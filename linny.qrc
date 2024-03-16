@@ -24,8 +24,6 @@
         <file>linny/06.png</file>
         <file>linny/07.png</file>
         <file>linny/08.png</file>
-        <file>array/01.png</file>
-        <file>array/02.png</file>
         <file>syfs/1.png</file>
         <file>syfs/2.png</file>
         <file>syfs/3.png</file>
@@ -40,5 +38,8 @@
         <file>photos/77.png</file>
         <file>hotel/1.png</file>
         <file>background/888.jpg</file>
+        <file>array/04.png</file>
+        <file>array/01.png</file>
+        <file>array/02.png</file>
     </qresource>
 </RCC>

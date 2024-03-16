@@ -6,6 +6,13 @@
 
 StartScene::StartScene(QWidget *parent)
     : QMainWindow(parent) {
+    // 加载图标图片
+    QPixmap iconPixmap(":/array/04.png");
+    // 调整图标大小
+    iconPixmap = iconPixmap.scaled(QSize(64, 64), Qt::KeepAspectRatio);
+    // 设置窗口图标
+    this->setWindowIcon(QIcon(iconPixmap));
+
     this->setFixedSize(1800, 1100);
 
     //创建主要界面
