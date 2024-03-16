@@ -18,7 +18,6 @@ signals:
     void returnMainScene();
 
 private:
-    Ui::Introduction *ui;
 };
 
 #endif// INTRODUCTION_H

@@ -108,7 +108,7 @@ myEquipment::myEquipment(QWidget *parent) : QMainWindow(parent) {
         QTimer *updateLabel = new QTimer(this);
         updateLabel->start(1000);
         connect(updateLabel, &QTimer::timeout, [=]() {
-            moneyLabel->setText("金币数: " + QString::number(money));
+            moneyLabel->setText("摩拉数: " + QString::number(money));
         });
 
         moneyLabel->setGeometry(65, 255, 400, 51);

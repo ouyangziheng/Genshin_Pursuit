@@ -18,6 +18,7 @@ Hotel::Hotel(QWidget *parent) : QMainWindow(parent) {
         "border-radius: 20px;"
         "border-width: 2px;"
         "border-color: #4D3B33;"
+        "font-size: 30px;"
         "border-style: solid;"
         "border-width: 5px;");
     connect(quitButton, &QPushButton::clicked, [=]() {
@@ -36,6 +37,7 @@ Hotel::Hotel(QWidget *parent) : QMainWindow(parent) {
         "border-radius: 20px;"
         "border-width: 2px;"
         "border-color: #4D3B33;"
+        "font-size: 30px;"
         "border-style: solid;"
         "border-width: 5px;");
 

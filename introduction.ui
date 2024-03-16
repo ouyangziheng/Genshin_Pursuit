@@ -18,10 +18,19 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>50</y>
+      <y>35</y>
       <width>71</width>
-      <height>16</height>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #425449;             /* 设置文字颜色 */
+background-color: #EFF1DB;  /* 设置背景颜色 */
+font-weight: bold;          /* 设置字体加粗 */
+border: 2px solid #425449; /* 设置文字边框 */
+border-radius: 10px;        /* 设置文字边框圆角 */
+padding: 5px;               /* 设置文字内边距 */
+</string>
     </property>
     <property name="text">
      <string>游戏说明</string>
@@ -144,7 +153,7 @@
      <string>深渊法师慢速移动，生命值中等，可以瞬移，并且对角色减速</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="label_1">
     <property name="geometry">
      <rect>
       <x>100</x>
