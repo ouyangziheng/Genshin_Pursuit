@@ -135,7 +135,7 @@ void Scene02::createMoster() {
 
             // 创建 qqKING 对象并设置随机位置
             qqking *bigqqren = new qqking(this);
-            bigqqren->lives = 3 * waveOfMonster02 + 18 + waveOfMonster02 * waveOfMonster02;
+            bigqqren->lives = 10 * (3 * waveOfMonster02 + 18 + waveOfMonster02 * waveOfMonster02);
             QTimer *timer_updateThePositionOfLinny = new QTimer(this);
             qqkingObjects.push_back(bigqqren);
             bigqqren->speed = 4 + 0.5 * waveOfMonster02;

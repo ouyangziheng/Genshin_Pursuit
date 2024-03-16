@@ -16,7 +16,9 @@ class Hotel : public QMainWindow {
 public:
     explicit Hotel(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *event);
+
 signals:
+    void theGameEnd();
     void returnMainScene();
 };
 

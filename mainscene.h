@@ -21,6 +21,7 @@ public:
     explicit MainScene(QWidget *parent = nullptr);
     ~MainScene();
 signals:
+    void theGameEnd();
 };
 
 #endif// MAINSCENE_H

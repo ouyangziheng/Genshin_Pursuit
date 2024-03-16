@@ -60,6 +60,7 @@ Hotel::Hotel(QWidget *parent) : QMainWindow(parent) {
                 QMessageBox::warning(this, "提示", "由于金币不足,您被酒庄拒绝了");
                 if (livesOfLinny <= 0) {
                     QMessageBox::warning(this, "提示", "林尼身负重伤,无法移动,游戏失败了");
+                    emit theGameEnd();
                 }
             }
         }

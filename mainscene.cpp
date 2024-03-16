@@ -1,14 +1,5 @@
 #include "mainscene.h"
 
-int score;
-
-int money;
-int velocity = 6;
-int atk = 1;
-
-int maxLives = 3;
-int livesOfLinny = 3;
-
 MainScene::MainScene(QWidget *parent) : QMainWindow(parent) {
     this->setFixedSize(1800, 1100);
 
@@ -120,6 +111,11 @@ MainScene::MainScene(QWidget *parent) : QMainWindow(parent) {
         connect(hl, &Hotel::returnMainScene, [=]() {
             hl->hide();
             this->show();
+        });
+        connect(hl, &Hotel::theGameEnd, [=]() {
+            hl->hide();
+            this->show();
+            emit theGameEnd();
         });
     }
 

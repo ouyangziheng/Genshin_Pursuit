@@ -4,6 +4,15 @@
 
 #include "mainscene.h"
 
+int score;
+
+int money;
+int velocity = 6;
+int atk = 10;
+
+int maxLives = 3;
+int livesOfLinny = 3;
+
 StartScene::StartScene(QWidget *parent)
     : QMainWindow(parent) {
     // 加载图标图片
@@ -39,8 +48,19 @@ StartScene::StartScene(QWidget *parent)
         startButton->move(665, 890);
         startButton->setText("开始游戏");
         connect(startButton, &QPushButton::clicked, [=]() {
+            score = 0;
+            money = 0;
+            velocity = 6;
+            atk = 10;
+            maxLives = 3;
+            livesOfLinny = 3;
+
             this->close();
             mainScene->show();
+        });
+        connect(mainScene, &MainScene::theGameEnd, [=]() {
+            mainScene->close();
+            this->show();
         });
         startButton->setStyleSheet(
             "color:#586B8C;"

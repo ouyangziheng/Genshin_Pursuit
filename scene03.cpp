@@ -147,7 +147,7 @@ void Scene03::createMoster() {
 
             // 创建 qqKING 对象并设置随机位置
             qqking *bigqqren = new qqking(this);
-            bigqqren->lives = 3 * waveOfMonster03 + 18 + waveOfMonster03 * waveOfMonster03;
+            bigqqren->lives = 10 * (3 * waveOfMonster03 + 18 + waveOfMonster03 * waveOfMonster03);
             QTimer *timer_updateThePositionOfLinny = new QTimer(this);
             qqkingObjects.push_back(bigqqren);
             bigqqren->speed = 4 + 0.5 * waveOfMonster03;
@@ -228,7 +228,7 @@ void Scene03::createMoster() {
 
             // 创建 syfs 对象并设置随机位置
             syfs *fs = new syfs(this);
-            fs->lives = 2 * waveOfMonster03 + 10 + waveOfMonster03 * waveOfMonster03;
+            fs->lives = 10 * (2 * waveOfMonster03 + 10 + waveOfMonster03 * waveOfMonster03);
             QTimer *timer_updateThePositionOfLinny = new QTimer(this);
             syfsObjects.push_back(fs);
 
