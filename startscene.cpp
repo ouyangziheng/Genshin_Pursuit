@@ -5,11 +5,9 @@
 #include "mainscene.h"
 
 int score;
-
 int money;
 int velocity = 6;
 int atk = 10;
-
 int maxLives = 3;
 int livesOfLinny = 3;
 
@@ -54,14 +52,24 @@ StartScene::StartScene(QWidget *parent)
             atk = 10;
             maxLives = 3;
             livesOfLinny = 3;
-
-            this->close();
-            mainScene->show();
+            QPropertyAnimation *animation = new QPropertyAnimation(startButton, "geometry");
+            animation->setDuration(200);
+            animation->setStartValue(QRect(startButton->x(), startButton->y() + 12, startButton->width(), startButton->height()));
+            animation->setEndValue(QRect(startButton->x(), startButton->y(), startButton->width(), startButton->height()));
+            animation->setEasingCurve(QEasingCurve::OutCurve);
+            animation->start();
+            QTimer::singleShot(200, [=]() {
+                this->close();
+                mainScene->show();
+            });
         });
+
         connect(mainScene, &MainScene::theGameEnd, [=]() {
             mainScene->close();
             this->show();
+            QMessageBox::warning(this, "提示", "您本次游戏的得分为:<center>" + QString::number(score) + "分<br>" + "加油，获取更高的分数吧！");
         });
+
         startButton->setStyleSheet(
             "color:#586B8C;"
             "background-color:#E2D9D0;"
