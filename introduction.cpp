@@ -3,8 +3,6 @@
 #include <QtWidgets>
 
 #include "QPushButton"
-#include "ui_introduction.h"
-
 Introduction::Introduction(QWidget *parent) : QMainWindow(parent) {
     this->setFixedSize(1800, 1100);
 
